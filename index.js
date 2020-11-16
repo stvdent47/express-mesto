@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
+const { ERROR_CODE_404, errorMessage404 } = require('./utils/utils.js');
 
 const app = express();
 const { port = 3000 } = process.env;
@@ -23,6 +24,6 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use('/', userRouter);
 app.use('/', cardRouter);
-app.use('*', (req, res) => res.status(404).send({ message: 'Запрашиваемый ресурс не найден' }));
+app.use('*', (req, res) => res.status(ERROR_CODE_404).send({ message: errorMessage404 }));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
