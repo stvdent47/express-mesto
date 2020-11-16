@@ -13,6 +13,13 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useCreateIndex: true,
 });
 
+app.use((req, res, next) => {
+  req.user = {
+    _id: '5fb1bc08203e9926cd683d15',
+  };
+
+  next();
+});
 app.use(bodyParser.json());
 app.use('/', userRouter);
 app.use('/', cardRouter);
