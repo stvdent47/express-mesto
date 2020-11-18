@@ -15,6 +15,18 @@ const getUser = (req, res) => {
     .catch((err) => checkErrors(res, err));
 };
 
+const updateUser = (req, res) => {
+  const userId = req.user._id;
+  User.findByIdAndUpdate(userId, {
+    name: req.body.name,
+    about: req.body.about,
+    avatar: req.body.avatar,
+  })
+    .orFail(new Error('ValidationError'))
+    .then((user) => res.send(user))
+    .catch((err) => checkErrors(res, err));
+};
+
 const createUser = (req, res) => {
   User.create(req.body)
     .then((user) => res.status(200).send(user))
@@ -24,5 +36,6 @@ const createUser = (req, res) => {
 module.exports = {
   getUsers,
   getUser,
+  updateUser,
   createUser,
 };
