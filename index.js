@@ -22,8 +22,8 @@ app.use((req, res, next) => {
   next();
 });
 app.use(bodyParser.json());
-app.use('/', userRouter);
-app.use('/', cardRouter);
+app.use('/users', userRouter);
+app.use('/cards', cardRouter);
 app.use('*', (req, res) => res.status(ERROR_CODE_404).send({ message: errorMessage404 }));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
