@@ -20,8 +20,28 @@ const updateUser = (req, res) => {
   User.findByIdAndUpdate(userId, {
     name: req.body.name,
     about: req.body.about,
-    avatar: req.body.avatar,
+  },
+  {
+    new: true,
+    runValidators: true,
+    // upsert: true,
   })
+    .orFail(new Error('ValidationError'))
+    .then((user) => res.send(user))
+    .catch((err) => checkErrors(res, err));
+};
+
+const updateUserAvatar = (req, res) => {
+  const userId = req.user._id;
+  User.findByIdAndUpdate(userId,
+    {
+      avatar: req.body.avatar,
+    },
+    {
+      new: true,
+      runValidators: true,
+      // upsert: true,
+    })
     .orFail(new Error('ValidationError'))
     .then((user) => res.send(user))
     .catch((err) => checkErrors(res, err));
@@ -37,5 +57,6 @@ module.exports = {
   getUsers,
   getUser,
   updateUser,
+  updateUserAvatar,
   createUser,
 };
