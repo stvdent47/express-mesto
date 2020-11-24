@@ -3,7 +3,7 @@ const { checkErrors } = require('../utils/utils.js');
 
 const getUsers = (req, res) => {
   User.find()
-    .then((data) => res.send(data))
+    .then((data) => res.status(200).send(data))
     .catch((err) => checkErrors(res, err));
 };
 
@@ -11,7 +11,7 @@ const getUser = (req, res) => {
   const { userId } = req.params;
   User.findById(userId)
     .orFail(new Error('notValidId'))
-    .then((user) => res.send(user))
+    .then((user) => res.status(200).send(user))
     .catch((err) => checkErrors(res, err));
 };
 
@@ -27,7 +27,7 @@ const updateUser = (req, res) => {
     // upsert: true,
   })
     .orFail(new Error('ValidationError'))
-    .then((user) => res.send(user))
+    .then((user) => res.status(200).send(user))
     .catch((err) => checkErrors(res, err));
 };
 
@@ -43,7 +43,7 @@ const updateUserAvatar = (req, res) => {
       // upsert: true,
     })
     .orFail(new Error('ValidationError'))
-    .then((user) => res.send(user))
+    .then((user) => res.status(200).send(user))
     .catch((err) => checkErrors(res, err));
 };
 
